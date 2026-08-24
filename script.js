@@ -882,3 +882,394 @@ document.addEventListener(
 
     }
 );
+
+/* =================================
+   BALLOON AIM GAME
+================================= */
+
+const arrow =
+    document.getElementById("arrow");
+
+const balloon =
+    document.getElementById("targetBalloon");
+
+const gameArea =
+    document.getElementById("gameArea");
+
+const birthdayResult =
+    document.getElementById(
+        "birthdayResult"
+    );
+
+let draggingArrow = false;
+
+let arrowStartX = 0;
+let arrowStartY = 0;
+
+let arrowX = 0;
+let arrowY = 0;
+
+
+/* =========================
+   START DRAG
+========================= */
+
+function startArrowDrag(e){
+
+    draggingArrow = true;
+
+    const point =
+        e.touches
+        ? e.touches[0]
+        : e;
+
+    arrowStartX =
+        point.clientX;
+
+    arrowStartY =
+        point.clientY;
+
+    arrow.style.cursor =
+        "grabbing";
+
+}
+
+
+/* =========================
+   MOVE ARROW
+========================= */
+
+function moveArrow(e){
+
+    if(!draggingArrow) return;
+
+    const point =
+        e.touches
+        ? e.touches[0]
+        : e;
+
+    const moveX =
+        point.clientX -
+        arrowStartX;
+
+    const moveY =
+        point.clientY -
+        arrowStartY;
+
+
+    arrowX += moveX;
+    arrowY += moveY;
+
+
+    const areaRect =
+        gameArea.getBoundingClientRect();
+
+
+    const arrowRect =
+        arrow.getBoundingClientRect();
+
+
+    let newLeft =
+        arrow.offsetLeft +
+        moveX;
+
+
+    let newTop =
+        arrow.offsetTop +
+        moveY;
+
+
+    /* Keep arrow inside area */
+
+    newLeft =
+        Math.max(
+            0,
+            Math.min(
+                areaRect.width -
+                arrow.offsetWidth,
+                newLeft
+            )
+        );
+
+
+    newTop =
+        Math.max(
+            0,
+            Math.min(
+                areaRect.height -
+                arrow.offsetHeight,
+                newTop
+            )
+        );
+
+
+    arrow.style.left =
+        newLeft + "px";
+
+    arrow.style.top =
+        newTop + "px";
+
+
+    arrow.style.bottom =
+        "auto";
+
+
+    /* Update start */
+
+    arrowStartX =
+        point.clientX;
+
+    arrowStartY =
+        point.clientY;
+
+
+    /* Aim toward balloon */
+
+    aimArrow();
+
+}
+
+
+/* =========================
+   AIM
+========================= */
+
+function aimArrow(){
+
+    const arrowRect =
+        arrow.getBoundingClientRect();
+
+    const balloonRect =
+        balloon.getBoundingClientRect();
+
+
+    const arrowCenterX =
+        arrowRect.left +
+        arrowRect.width / 2;
+
+    const arrowCenterY =
+        arrowRect.top +
+        arrowRect.height / 2;
+
+
+    const balloonCenterX =
+        balloonRect.left +
+        balloonRect.width / 2;
+
+    const balloonCenterY =
+        balloonRect.top +
+        balloonRect.height / 2;
+
+
+    const dx =
+        balloonCenterX -
+        arrowCenterX;
+
+    const dy =
+        balloonCenterY -
+        arrowCenterY;
+
+
+    const angle =
+        Math.atan2(
+            dy,
+            dx
+        ) *
+        180 /
+        Math.PI;
+
+
+    arrow.style.transform =
+        `rotate(${angle}deg)`;
+
+}
+
+
+/* =========================
+   RELEASE
+========================= */
+
+function releaseArrow(){
+
+    if(!draggingArrow)
+        return;
+
+
+    draggingArrow = false;
+
+    arrow.style.cursor =
+        "grab";
+
+
+    shootArrow();
+
+}
+
+
+/* =========================
+   SHOOT
+========================= */
+
+function shootArrow(){
+
+    const arrowRect =
+        arrow.getBoundingClientRect();
+
+    const balloonRect =
+        balloon.getBoundingClientRect();
+
+
+    const arrowCenterX =
+        arrowRect.left +
+        arrowRect.width / 2;
+
+    const arrowCenterY =
+        arrowRect.top +
+        arrowRect.height / 2;
+
+
+    const balloonCenterX =
+        balloonRect.left +
+        balloonRect.width / 2;
+
+    const balloonCenterY =
+        balloonRect.top +
+        balloonRect.height / 2;
+
+
+    const dx =
+        balloonCenterX -
+        arrowCenterX;
+
+    const dy =
+        balloonCenterY -
+        arrowCenterY;
+
+
+    const distance =
+        Math.sqrt(
+            dx * dx +
+            dy * dy
+        );
+
+
+    /*
+       If arrow is close enough
+       to balloon → POP
+    */
+
+    if(distance < 150){
+
+        popBirthdayBalloon();
+
+    }else{
+
+        document.getElementById(
+            "gameMessage"
+        ).innerHTML =
+            "😄 নিশানা ঠিক হয়নি! আবার তীরটা টেনে নাও।";
+
+        resetArrow();
+
+    }
+
+}
+
+
+/* =========================
+   POP BALLOON
+========================= */
+
+function popBirthdayBalloon(){
+
+    balloon.classList.add(
+        "balloon-pop"
+    );
+
+
+    document.getElementById(
+        "gameMessage"
+    ).innerHTML =
+        "💥 POP! 🎉";
+
+
+    createConfetti(100);
+
+    createHearts(30);
+
+
+    setTimeout(() => {
+
+        birthdayResult.style.display =
+            "flex";
+
+        grandCelebration();
+
+    },500);
+
+}
+
+
+/* =========================
+   RESET ARROW
+========================= */
+
+function resetArrow(){
+
+    setTimeout(() => {
+
+        arrow.style.left =
+            "50%";
+
+        arrow.style.top =
+            "auto";
+
+        arrow.style.bottom =
+            "35px";
+
+        arrow.style.transform =
+            "translateX(-50%) rotate(-35deg)";
+
+    },500);
+
+}
+
+
+/* =========================
+   POINTER EVENTS
+========================= */
+
+arrow.addEventListener(
+    "mousedown",
+    startArrowDrag
+);
+
+document.addEventListener(
+    "mousemove",
+    moveArrow
+);
+
+document.addEventListener(
+    "mouseup",
+    releaseArrow
+);
+
+
+/* Touch */
+
+arrow.addEventListener(
+    "touchstart",
+    startArrowDrag,
+    {passive:true}
+);
+
+document.addEventListener(
+    "touchmove",
+    moveArrow,
+    {passive:true}
+);
+
+document.addEventListener(
+    "touchend",
+    releaseArrow
+);
