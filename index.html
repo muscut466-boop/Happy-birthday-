@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>তাহমিনার জন্মদিন 🎂</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- সব Screen এখানে থাকবে -->
+  <div id="app">
+
+    <!-- Screen 1 -->
+    <section class="screen active" id="screen1">
+
+      <div class="card">
+
+        <div class="moon">🌙</div>
+
+        <h1>আসসালামু আলাইকুম</h1>
+
+        <p>
+          তাহমিনা, তোমার জন্য একটি ছোট্ট সারপ্রাইজ আছে... ✨
+        </p>
+
+        <p>
+          তুমি কি সারপ্রাইজটা দেখতে চাও? 👀
+        </p>
+
+        <button onclick="nextScreen(2)">
+          🌙 তাহমিনা, সামনে এগিয়ে যাও
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 2 -->
+    <section class="screen" id="screen2">
+
+      <div class="card">
+
+        <div class="cake-icon">🎂</div>
+
+        <h1>🎂 তাহমিনা, আজ তোমার জন্মদিন 🎂</h1>
+
+        <p>
+          আজকের দিনটা একটু বিশেষ,
+          কারণ আজ তোমার জন্মদিন। ❤️
+        </p>
+
+        <p>
+          তাহমিনা, তোমার জন্য একটা সুন্দর
+          জন্মদিনের সারপ্রাইজ তৈরি করেছি। ✨
+        </p>
+
+        <button onclick="nextScreen(3)">
+          🎁 তাহমিনা, সারপ্রাইজ শুরু করি
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 3 -->
+    <section class="screen" id="screen3">
+
+      <div class="card">
+
+        <h2>
+          🎂 তাহমিনা, তোমার জন্মদিনের তারিখ লিখো
+        </h2>
+
+        <p>
+          দেখিই তো তুমি তোমার জন্মদিন মনে রেখেছো কিনা! 😄
+        </p>
+
+
+        <div class="date-box">
+
+          <div>
+            <label>তারিখ</label>
+            <input
+              id="day"
+              type="number"
+              placeholder="দিন"
+              min="1"
+              max="31">
+          </div>
+
+          <span>/</span>
+
+          <div>
+            <label>মাস</label>
+            <input
+              id="month"
+              type="number"
+              placeholder="মাস"
+              min="1"
+              max="12">
+          </div>
+
+          <span>/</span>
+
+          <div>
+            <label>বছর</label>
+            <input
+              id="year"
+              type="number"
+              placeholder="বছর">
+          </div>
+
+        </div>
+
+
+        <p id="error"></p>
+
+        <button onclick="checkBirthday()">
+          🎉 তাহমিনা, এগিয়ে যাও
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 4 -->
+    <section class="screen" id="screen4">
+
+      <div class="card">
+
+        <h2>
+          💌 তাহমিনা, তোমার জন্য একটি চিঠি এসেছে
+        </h2>
+
+        <p>
+          চিঠিটা খুলে দেখো... ✨
+        </p>
+
+        <div
+          class="envelope"
+          onclick="openLetter()">
+
+          💌
+
+        </div>
+
+        <div id="letter"></div>
+
+        <button
+          id="letterButton"
+          onclick="nextScreen(5)"
+          style="display:none;">
+
+          ✨ তাহমিনা, সামনে এগিয়ে যাও
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 5 -->
+    <section class="screen" id="screen5">
+
+      <div class="card">
+
+        <h2>
+          🎈 তাহমিনা, একটা ছোট্ট খেলা খেলবে?
+        </h2>
+
+        <p>
+          সঠিক Balloon-টাতে tap করো! ✨
+        </p>
+
+        <div id="balloonArea"></div>
+
+        <p id="balloonMessage"></p>
+
+        <button
+          id="balloonButton"
+          onclick="nextScreen(6)"
+          style="display:none;">
+
+          🎁 তাহমিনা, এবার পরের সারপ্রাইজ
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 6 -->
+    <section class="screen" id="screen6">
+
+      <div class="card">
+
+        <h2>
+          🎁 তাহমিনা, তোমার জন্য আরেকটা সারপ্রাইজ আছে
+        </h2>
+
+        <p>
+          তুমি কি উপহারটা খুলে দেখতে চাও? 👀
+        </p>
+
+        <div
+          class="gift"
+          onclick="openGift()">
+
+          🎁
+
+        </div>
+
+        <button
+          id="giftButton"
+          onclick="nextScreen(7)"
+          style="display:none;">
+
+          🎂 তাহমিনা, সামনে এগিয়ে যাও
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 7 -->
+    <section class="screen" id="screen7">
+
+      <div class="card">
+
+        <h2>
+          🎂 তাহমিনা, তোমার জন্য Birthday Cake
+        </h2>
+
+        <p>
+          এই কেকটা তোমার জন্মদিনের জন্য। ❤️
+        </p>
+
+
+        <!-- CSS 3D Cake -->
+
+        <div class="cake">
+
+          <div class="cake-layer bottom"></div>
+
+          <div class="cake-layer middle"></div>
+
+          <div class="cake-layer top"></div>
+
+          <div class="cream"></div>
+
+          <div class="candle">
+
+            <div class="flame"></div>
+
+          </div>
+
+        </div>
+
+
+        <p>
+          তাহমিনা, এই কেকটা তোমার জন্য। ❤️
+        </p>
+
+        <button onclick="nextScreen(8)">
+          🕯️ তাহমিনা, সামনে এগিয়ে যাও
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 8 -->
+    <section class="screen" id="screen8">
+
+      <div class="card">
+
+        <h2>
+          🕯️ তাহমিনা, একটা ইচ্ছা করো... ✨
+        </h2>
+
+        <p>
+          এবার মোমবাতিটা নিভিয়ে দাও 🕯️
+        </p>
+
+
+        <div
+          class="big-candle"
+          onclick="blowCandle()">
+
+          🕯️
+
+        </div>
+
+
+        <p id="wish"></p>
+
+        <button
+          id="wishButton"
+          onclick="startCountdown()"
+          style="display:none;">
+
+          🎉 তাহমিনা, বড় সারপ্রাইজ দেখো
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 9 -->
+    <section class="screen" id="screen9">
+
+      <div class="card">
+
+        <h2>
+          তাহমিনা, প্রস্তুত তো? 👀
+        </h2>
+
+        <div id="countdown">
+          3
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Screen 10 -->
+    <section class="screen" id="screen10">
+
+      <div class="card">
+
+        <h1>
+          🎉 শুভ জন্মদিন তাহমিনা 🎉
+        </h1>
+
+        <p>
+          তাহমিনা, তোমার নতুন বছরটা হোক
+          অনেক সুন্দর, আনন্দময় এবং স্মরণীয়। ❤️
+        </p>
+
+        <p>
+          তোমার প্রতিটি দিন হোক
+          হাসি, আনন্দ আর সুন্দর মুহূর্তে ভরা। ✨
+        </p>
+
+        <p>
+          তোমার সব সুন্দর স্বপ্ন পূরণ হোক। 💖
+        </p>
+
+        <div class="final-emoji">
+          🎂🎈🎁🎆
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
+  
